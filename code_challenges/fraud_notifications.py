@@ -52,34 +52,57 @@
 
 # 0
 
-def getMedian(lst):
-    lst.sort()
+# def getMedian(l):
+#     l.sort()
 
-    if len(lst)%2 == 0:
-        med_idx1= len(lst)//2
-        med_idx2 = med_idx1+1
+#     if len(l) % 2 == 0:
+#         median1 = len(l) // 2
+#         median2 = median1 + 1
 
-        median= (lst[med_idx1] + lst[med_idx2])//2
+#         median = (l[median1] + l[median2]) // 2
+#     else:
+#         median1 = len(l) // 2
+#         median = l[median1]
+
+#     return median
+
+# def activityNotifications(expenditure, d):
+#     count = 0
+#     l = expenditure[:d]
+#     median = getMedian(l)
+
+#     for i in range(d, len(expenditure)):
+#         if median * 2 <= expenditure[i]:
+#             count += 1
+
+#         l.pop(0)
+#         l.append(expenditure[i])
+
+#         median = getMedian(l)
+
+#     return count
+
+import bisect
+def mean(sortedArray,d):
+    if d%2==0:
+        return(sortedArray[d//2]+sortedArray[d//2-1])
     else:
-        med_idx1= len(lst)//2
-        median = lst[med_idx1]
+        return(sortedArray[d//2]*2)
 
-    return median
 
-def activityNotifications(expenditure, d):
+def activityNotifications(exp, d):
+    alert=0
+    sortedArray=sorted(exp[:d])
 
-    alarm = 0
-    lst= expenditure[:d]
-    median= getMedian(lst)
+    oldValIndex=0
+    for i,v in enumerate(exp[d:]):
+        meanVal=mean(sortedArray,d)
+        if meanVal<=v:
+            alert+=1
 
-    for i in range(d,len(expenditure)):
-        
-        if median*2 <= expenditure[i]:
-            alarm += 1
+        idx = bisect.bisect_left(sortedArray, exp[oldValIndex])
+        oldValIndex+=1
+        sortedArray.pop(idx)
 
-        lst.pop(0)
-        lst.append(expenditure[i])
-
-        median= getMedian(lst)
-
-    return alarm
+        bisect.insort(sortedArray,v)    
+    return(alert)
