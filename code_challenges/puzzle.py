@@ -26,21 +26,47 @@ import string
 import random 
 import re 
 
+# def replaceQuestionMark(puzzle):
+#     # find question marks and iterate through all of them 
+#     for data in re.finditer(r'\?',puzzle):
+#         # if the question mark is at the start of the string puzzle exclude only the character following it
+#         if data.span()[0] == 0: 
+#             excludeChar = puzzle[(data.span()[0]+1):(data.span()[1]+1)]
+#         # if the question mark is at the end of the string puzzle exclude only the character preceding it
+#         elif data.span()[1] == len(puzzle):
+#             excludeChar = puzzle[(data.span()[0]-1):(data.span()[1]-1)]
+#         # else exclude characters on both the sides of question mark
+#         else:
+#             excludeChar = puzzle[(data.span()[0]-1):(data.span()[1]-1)] + puzzle[(data.span()[0]+1):(data.span()[1]+1)]
+#         # substitute each question mark one by one with random choice of lowercase characters excluding the exclude character
+#         puzzle= re.sub(r'\?',random.choice([i for i in string.ascii_lowercase if i not in excludeChar]),puzzle,count=1)
+#     return puzzle
+import string
+
 def replaceQuestionMark(puzzle):
-    # find question marks and iterate through all of them 
-    for data in re.finditer(r'\?',puzzle):
-        # if the question mark is at the start of the string puzzle exclude only the character following it
-        if data.span()[0] == 0: 
-            excludeChar = puzzle[(data.span()[0]+1):(data.span()[1]+1)]
-        # if the question mark is at the end of the string puzzle exclude only the character preceding it
-        elif data.span()[1] == len(puzzle):
-            excludeChar = puzzle[(data.span()[0]-1):(data.span()[1]-1)]
-        # else exclude characters on both the sides of question mark
-        else:
-            excludeChar = puzzle[(data.span()[0]-1):(data.span()[1]-1)] + puzzle[(data.span()[0]+1):(data.span()[1]+1)]
-        # substitute each question mark one by one with random choice of lowercase characters excluding the exclude character
-        puzzle= re.sub(r'\?',random.choice([i for i in string.ascii_lowercase if i not in excludeChar]),puzzle,count=1)
-    return puzzle
+    replacement = random.choice(string.ascii_lowercase)
+    randomLetter = []
+    count = 0
+    
+    for char in range(len(puzzle)):
+        print('Looking at this char: ' + puzzle[char])
+        if puzzle[char] == '?':
+            randomLetter += replacement
+            replacement = random.choice(string.ascii_lowercase)
+            newPuzzle = puzzle.replace(puzzle[char], randomLetter[count])
+            count += 1
+            print(randomLetter, newPuzzle, count)
+        
+        elif puzzle[char] == puzzle[char - 1]:
+                
+            newPuzzle = puzzle.replace(puzzle[char - 1], randomLetter[count])
+            print('new puzzle: ' + newPuzzle)
+
+                
+            
+        
+        
+    
 
 # this is the driving code to test the three examples here 
 print(replaceQuestionMark('xy?xz?'))
