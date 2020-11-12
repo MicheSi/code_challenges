@@ -53,15 +53,13 @@ def replaceQuestionMark(puzzle):
         if puzzle[char] == '?':
             randomLetter += replacement
             replacement = random.choice(string.ascii_lowercase)
-            newPuzzle = puzzle.replace(puzzle[char], randomLetter[count])
+            puzzle = puzzle.replace(puzzle[char], randomLetter[count], 1)
             count += 1
-            print(randomLetter, newPuzzle, count)
+            print(randomLetter, puzzle, count)
         
-        elif puzzle[char] == puzzle[char - 1]:
-                
-            newPuzzle = puzzle.replace(puzzle[char - 1], randomLetter[count])
-            print('new puzzle: ' + newPuzzle)
+    
 
+    
                 
             
         
