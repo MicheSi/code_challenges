@@ -1,0 +1,29 @@
+function f(n, k){
+  let dp = new Array(n + 1)
+  for (let i=0; i<n+1; i++)
+    dp[i] = new Array(k + 1).fill(0)
+  dp[0][0] = 1
+  
+  for (let i=1; i<=n; i++)
+    for (let j=1; j<=Math.min(i, k); j++)
+      dp[i][j] = dp[i - j][j] + dp[i - 1][j - 1]
+
+  return dp[n][k]
+}
+
+public static int nToKGroups(int n, int k) {
+		if(n < k) {
+			return 0;
+		}
+		int[][] dp = new int[k+1][n+1];
+		for(int i = 1; i <= k; i++) {
+			for(int j = i; j <= n; j++) {
+                if(i==j) {
+                    dp[i][j] = 1;
+                } else {
+                    dp[i][j] = dp[i-1][j-1] + dp[i][j-i];
+                }
+			}
+		}
+		return dp[k][n];
+	}
