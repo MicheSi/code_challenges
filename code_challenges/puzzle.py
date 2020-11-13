@@ -24,6 +24,28 @@ It is always possible to turn string 'puzzle' into a string without two identica
 
 import string 
 import random 
+import string
+
+def replaceQuestionMark(puzzle):
+    replacement = random.choice(string.ascii_lowercase)
+    randomLetter = []
+    count = 0
+    
+    for char in range(len(puzzle)):
+        print('Looking at this char: ' + puzzle[char])
+        if puzzle[char] == '?':
+            randomLetter += replacement
+            replacement = random.choice(string.ascii_lowercase)
+            puzzle = puzzle.replace(puzzle[char], randomLetter[count], 1)
+            count += 1
+            print(randomLetter, puzzle, count)
+        
+print(replaceQuestionMark('xy?xz?'))
+print(replaceQuestionMark('ab?e?mr??'))
+print(replaceQuestionMark('??????'))
+
+
+
 import re 
 
 # def replaceQuestionMark(puzzle):
@@ -41,32 +63,3 @@ import re
 #         # substitute each question mark one by one with random choice of lowercase characters excluding the exclude character
 #         puzzle= re.sub(r'\?',random.choice([i for i in string.ascii_lowercase if i not in excludeChar]),puzzle,count=1)
 #     return puzzle
-import string
-
-def replaceQuestionMark(puzzle):
-    replacement = random.choice(string.ascii_lowercase)
-    randomLetter = []
-    count = 0
-    
-    for char in range(len(puzzle)):
-        print('Looking at this char: ' + puzzle[char])
-        if puzzle[char] == '?':
-            randomLetter += replacement
-            replacement = random.choice(string.ascii_lowercase)
-            puzzle = puzzle.replace(puzzle[char], randomLetter[count], 1)
-            count += 1
-            print(randomLetter, puzzle, count)
-        
-    
-
-    
-                
-            
-        
-        
-    
-
-# this is the driving code to test the three examples here 
-print(replaceQuestionMark('xy?xz?'))
-print(replaceQuestionMark('ab?e?mr??'))
-print(replaceQuestionMark('??????'))
